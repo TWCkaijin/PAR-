@@ -22,19 +22,27 @@ class make_lib():
             token = token_c.copy()
             map_lib.update({map_codex[count_codex][make_lib]:token})
             #print(token,token_c)
-    print(map_lib)
+    #print(map_lib)
     lib_make_end = time.time()
     print("Took",lib_make_end - lib_make_start,"sec")
     #print( map_lib[map_codex[0][0]][0] ) #cp
 
 
+
+''' 排序方式  
+    1
+ 4     2
+    3
+'''
+
 class make_map():
-    lenth = int(input("submit lenth"))
-    width = int(input("submit width"))
-    first_block = random.randint(0,len(map_codex)*len(map_codex[0])-1)
+    lenth = int(input("submit lenth: "))
+    width = int(input("submit width: "))
+    first_block = random.randint(0,len(map_codex)*len(map_codex[0]))
     map_token = []
     map_token.append(map_lib[map_codex[int(first_block/len(map_codex))][first_block%len(map_codex[0])]])
-    for first_row in range(width-1):
+    #first row generation 
+    for first_row in range(width-1): #第一橫行
         comply_token = []
         for fn in range(len(map_codex)):
             for sn in range(len(map_codex[0])):
@@ -43,20 +51,30 @@ class make_map():
         #print(comply_token)  #cp
         comply_chosen = random.randint(0,len(comply_token)-1)
         map_token.append(comply_token[comply_chosen])
-    print("map_token =",map_token)
-        
-        
-    """
-    for l in range(1,lenth+1):
+    #print("map_token =",map_token)
+
+   
+    for l in range(lenth-1):
         comply_token = []
-        print('\n')
-        for w in range (width):
-            for fn in range(len(map_codex)):
-                for sn in range(len(map_codex[0])):
-                    if ( (map_lib[map_codex[fn][sn]][3]) == map_token[width+l*width+w-1] [1] ) and ( ( map_lib[map_codex[fn][sn]] [0] ) == ( map_token[l*width+w-1][2] ) ):
-                        comply_token.append(map_lib[map_codex[fn][sn]])
+        # first block for each row after the second row  
+        for fn in range(len(map_codex)):
+            for sn in range(len(map_codex[0])):
+                if ( ( map_lib[map_codex[fn][sn]][0] ) == ( map_token[l*(lenth)][2] )):
+                    comply_token.append(map_lib[map_codex[fn][sn]])
         comply_chosen = random.randint(0,len(comply_token)-1)
         map_token.append(comply_token[comply_chosen])
-    """
+        
+        # the rest block for all the row  after the second row 
+        
+        for w in range (width-1):
+            comply_token = []
+            for fn in range(len(map_codex)):
+                for sn in range(len(map_codex[0])):
+                    if (((map_lib[map_codex[fn][sn]][3]) == map_token[l*lenth+width+w] [1] ) and ( ( map_lib[map_codex[fn][sn]][0] ) == ( map_token[l*(width)+w+1][2] ))):
+                        comply_token.append(map_lib[map_codex[fn][sn]])
+            comply_chosen = random.randint(0,len(comply_token)-1)
+            map_token.append(comply_token[comply_chosen])
+    print(f'random map = {map_token}')
+    
 #print( "map_lib = ",map_lib[ map_codex[0][0] ] )  #cp
 #map_block = [[]]
